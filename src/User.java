@@ -49,8 +49,7 @@ public class User extends UserComponent implements Subject, Observer{
 	}
 
 	public void addFollowing(User follow) {
-		following.add(follow);
-		followingSize++;
+		register(follow);
 	}
 	public int getFollowingSize(){
 		return followingSize;
@@ -64,15 +63,9 @@ public class User extends UserComponent implements Subject, Observer{
 		newsFeed.add(newNews);
 	}
 
-	@Override
-	public void register(Observer follower) {
-		followers.add(follower);
-	}
-
-	@Override
-	public void unregister(Observer o) {
-		// TODO Auto-generated method stub
-		
+	public void register(Observer o) {
+			following.add(o);
+			followingSize++;
 	}
 	
 	public void getNewTweet(String tweet) {
@@ -80,7 +73,6 @@ public class User extends UserComponent implements Subject, Observer{
 		notifyObserver();
 	}
 	
-	@Override
 	public void notifyObserver() {
 		for(int i = 0; i < followers.size(); i++) {
 			followers.get(i).update(newTweet);
@@ -88,7 +80,6 @@ public class User extends UserComponent implements Subject, Observer{
 		
 	}
 
-	@Override
 	public void update(String newTweet) {
 		this.addToNewsFeed(newTweet);
 	}
