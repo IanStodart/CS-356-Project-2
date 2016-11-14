@@ -40,8 +40,8 @@ public class User extends UserComponent implements Subject, Observer{
 		return followers;
 	}
 
-	public void addFollowers(User follower) {
-		followers.add(follower);
+	public void addFollower(Observer o) {
+		followers.add(o);
 	}
 
 	public ArrayList<Observer> getFollowing() {
@@ -65,19 +65,19 @@ public class User extends UserComponent implements Subject, Observer{
 
 	public void register(Observer o) {
 			following.add(o);
+			o.addFollower(this);
 			followingSize++;
 	}
 	
 	public void getNewTweet(String tweet) {
 		newTweet = tweet;
-		notifyObserver();
+		this.notifyObserver();
 	}
 	
 	public void notifyObserver() {
 		for(int i = 0; i < followers.size(); i++) {
 			followers.get(i).update(newTweet);
 		}
-		
 	}
 
 	public void update(String newTweet) {
@@ -89,5 +89,6 @@ public class User extends UserComponent implements Subject, Observer{
 	public String toString() {
 		return userID;
 	}
+
 	
 }

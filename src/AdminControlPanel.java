@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.awt.event.ActionEvent;
 
@@ -25,6 +26,7 @@ public class AdminControlPanel extends JFrame {
 	private JTextField newGroupName;
 	private UserList listOfUsers;
 	private TweetCollection allTweets = new TweetCollection();
+	ArrayList<UserView> views = new ArrayList<UserView>();
 
 	public static AdminControlPanel getInstance(UserList users){
 		if(instance == null)
@@ -92,7 +94,8 @@ public class AdminControlPanel extends JFrame {
 				TreePath path = tree.getSelectionPath();
 				String id = path.getLastPathComponent().toString();
 				User u = listOfUsers.search(id);
-				UserView frame = UserView.createInstance(listOfUsers, u, allTweets);
+				UserView frame = UserView.createInstance(listOfUsers, u, allTweets,views);
+				views.add(frame);
 				frame.visible();
 			}
 		});
@@ -107,7 +110,7 @@ public class AdminControlPanel extends JFrame {
 		showUserTotal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 		        JFrame window = new JFrame("User Count");
-		        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		        JLabel label = new JLabel("Number of Users: " + listOfUsers.getNumOfUsers());
 		        window.getContentPane().add(label);
@@ -128,7 +131,7 @@ public class AdminControlPanel extends JFrame {
 		showGroupTotal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 		        JFrame window = new JFrame("Group Count");
-		        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		        JLabel label = new JLabel("Number of Groups: " + listOfUsers.getNumOfGroupss());
 		        window.getContentPane().add(label);
@@ -149,7 +152,7 @@ public class AdminControlPanel extends JFrame {
 		showMsgTotal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 		        JFrame window = new JFrame("Tweet Count");
-		        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		        JLabel label = new JLabel("Number of Tweets: " + allTweets.getSize());
 		        window.getContentPane().add(label);
@@ -170,7 +173,7 @@ public class AdminControlPanel extends JFrame {
 		showPosPerc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 		        JFrame window = new JFrame("Positive Tweet Percent");
-		        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		        JLabel label = new JLabel("Percentage of Positive Tweets: " + allTweets.getPosPerc());
 		        window.getContentPane().add(label);

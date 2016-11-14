@@ -29,8 +29,13 @@ public class TweetCollection implements Visitable{
 				}
 			}
 		}
-		double perc = (Integer)(pos/(this.getSize())*100);
+		if (this.getSize() == 0) {
+			return 0;
+		}
+		else {
+			double perc = (Integer)(pos/(this.getSize())*100);
 		return perc/100;
+		}
 	}
 
 }
